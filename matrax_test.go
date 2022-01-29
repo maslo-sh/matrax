@@ -40,8 +40,70 @@ func TestMatrixMultiplication(t *testing.T) {
 	expected.Elements[2][2] = 3072
 
 	var result = utils.Multiply(*matrixA, *matrixB)
+	var result2 = utils.MultiplySquare(*matrixA, *matrixB)
 
 	if !(result.String() == expected.String()) {
 		t.Errorf("Expected %v, got %v", expected, result)
+	}
+
+	if !(result2.String() == expected.String()) {
+		t.Errorf("Expected %v, got %v", expected, result2)
+	}
+}
+
+func BenchmarkMatrixMultiplication(b *testing.B) {
+	var matrixA = NewMatrix(3, 3)
+	matrixA.Elements[0][0] = 1
+	matrixA.Elements[0][1] = 5
+	matrixA.Elements[0][2] = 54
+	matrixA.Elements[1][0] = -11
+	matrixA.Elements[1][1] = 3
+	matrixA.Elements[1][2] = 64
+	matrixA.Elements[2][0] = 0
+	matrixA.Elements[2][1] = 3
+	matrixA.Elements[2][2] = 4
+
+	var matrixB = NewMatrix(3, 3)
+	matrixB.Elements[0][0] = 5
+	matrixB.Elements[0][1] = 2
+	matrixB.Elements[0][2] = 88
+	matrixB.Elements[1][0] = -257
+	matrixB.Elements[1][1] = 6
+	matrixB.Elements[1][2] = 1024
+	matrixB.Elements[2][0] = 8
+	matrixB.Elements[2][1] = 99
+	matrixB.Elements[2][2] = 0
+
+	for n := 0; n < b.N; n++ {
+		utils.Multiply(*matrixA, *matrixB)
+	}
+
+}
+
+func BenchmarkSquareMatrixMultiplication(b *testing.B) {
+	var matrixA = NewMatrix(3, 3)
+	matrixA.Elements[0][0] = 1
+	matrixA.Elements[0][1] = 5
+	matrixA.Elements[0][2] = 54
+	matrixA.Elements[1][0] = -11
+	matrixA.Elements[1][1] = 3
+	matrixA.Elements[1][2] = 64
+	matrixA.Elements[2][0] = 0
+	matrixA.Elements[2][1] = 3
+	matrixA.Elements[2][2] = 4
+
+	var matrixB = NewMatrix(3, 3)
+	matrixB.Elements[0][0] = 5
+	matrixB.Elements[0][1] = 2
+	matrixB.Elements[0][2] = 88
+	matrixB.Elements[1][0] = -257
+	matrixB.Elements[1][1] = 6
+	matrixB.Elements[1][2] = 1024
+	matrixB.Elements[2][0] = 8
+	matrixB.Elements[2][1] = 99
+	matrixB.Elements[2][2] = 0
+
+	for n := 0; n < b.N; n++ {
+		utils.MultiplySquare(*matrixA, *matrixB)
 	}
 }
