@@ -12,6 +12,7 @@ func main() {
 	matrix1.Elements[0][1] = 2
 	matrix1.Elements[1][0] = 3
 	matrix1.Elements[1][1] = 1444
+	fmt.Println(matrix1.String())
 
 	matrix2 := NewMatrix(2, 2)
 	matrix2.Elements[0][0] = 10
